@@ -1,42 +1,51 @@
-# 📘 AudioBook Generator
+# 📘 AI Audiobook Generator
 
-An interactive web app built with **Streamlit** that converts documents into engaging audiobook narration using LLMs and Text-to-Speech.
+An AI-powered web application that converts documents into engaging audiobook-style narration. The application extracts text from PDF, DOCX, TXT, and scanned PDF documents, rewrites it into a natural narration using **LLaMA 3.1**, and generates downloadable audio using **Google Text-to-Speech (gTTS)**.
 
 ---
 
 ## 🚀 Features
 
-- 📂 Upload documents (PDF, DOCX, TXT, Scanned PDFs)
-- 🔍 Extract text using:
-  - PDF parsing
-  - OCR (Tesseract for scanned files)
-- ✍️ Rewrite content into natural audiobook narration using LLM
-- 🎧 Convert text to audio (MP3)
-- ⬇️ Download generated audiobook
+- 📂 Upload PDF, DOCX, and TXT files
+- 📄 Extract text from digital documents
+- 🖼️ OCR support for scanned PDF documents
+- 🤖 AI-powered text rewriting using **LLaMA 3.1 (Groq API)**
+- 🔊 Convert narration into speech using **gTTS**
+- 🎧 Listen to generated audiobook inside the application
+- ⬇️ Download audiobook as an MP3 file
+- 💻 Simple and interactive Streamlit interface
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend/UI:** Streamlit  
-- **LLM:** Groq (LLaMA 3.1)  
-- **OCR:** Tesseract + pdf2image  
-- **Text Extraction:** pdfplumber, python-docx  
-- **Text-to-Speech:** gTTS  
+- Python
+- Streamlit
+- LLaMA 3.1
+- Groq API
+- pdfplumber
+- python-docx
+- Tesseract OCR
+- pdf2image
+- Pillow
+- gTTS
 
 ---
 
 ## 📁 Project Structure
 
 ```
-.
-├── app.py                  # Main Streamlit app
-├── modules/
-│   ├── text_extraction.py  # Handles PDF, DOCX, TXT & OCR
-│   ├── llm_rewrite.py      # Converts text into narration style
-│   └── tts.py              # Converts text to speech
+AI-Audiobook-Generator/
+│
+├── app.py
 ├── requirements.txt
-└── README.md
+├── README.md
+├── modules/
+│   ├── __init__.py
+│   ├── text_extraction.py
+│   ├── llm_rewrite.py
+│   └── tts.py
+└── output/
 ```
 
 ---
@@ -46,13 +55,28 @@ An interactive web app built with **Streamlit** that converts documents into eng
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/audiobook-generator.git
-cd audiobook-generator
+git clone https://github.com/your-username/AI-Audiobook-Generator.git
+
+cd AI-Audiobook-Generator
 ```
 
----
+### 2. Create a virtual environment
 
-### 2. Install dependencies
+Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+Linux / macOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -60,11 +84,39 @@ pip install -r requirements.txt
 
 ---
 
-### 3. Install External Tools
+## 🔑 Configure Groq API
 
-#### ✅ Tesseract OCR
-- Download and install Tesseract
-- Update path in `text_extraction.py`:
+Create an API key from:
+
+https://console.groq.com/keys
+
+Set the environment variable.
+
+Windows
+
+```bash
+setx GROQ_API_KEY "YOUR_API_KEY"
+```
+
+Linux/macOS
+
+```bash
+export GROQ_API_KEY="YOUR_API_KEY"
+```
+
+Restart the terminal after setting the environment variable.
+
+---
+
+## 🖼️ OCR Setup
+
+Install **Tesseract OCR**.
+
+Download:
+
+https://github.com/tesseract-ocr/tesseract
+
+Update the path inside `modules/text_extraction.py`
 
 ```python
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -72,28 +124,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 
 ---
 
-#### ✅ Poppler (for PDF to Image)
-- Download Poppler
-- Update path:
-
-```python
-POPPLER_PATH = r"C:\poppler\Library\bin"
-```
-
----
-
-### 4. Set Environment Variable
-
-Set your **Groq API Key**:
-
-```bash
-export GROQ_API_KEY="your_api_key_here"   # Linux/Mac
-set GROQ_API_KEY=your_api_key_here       # Windows
-```
-
----
-
-## ▶️ Run the App
+## ▶️ Run the Application
 
 ```bash
 streamlit run app.py
@@ -101,41 +132,58 @@ streamlit run app.py
 
 ---
 
-## 📌 Usage
+## 📌 Workflow
 
-1. Upload a document (PDF/DOCX/TXT)
-2. Extract text automatically
-3. Click **"Rewrite Text"**
-4. Generate audiobook narration
-5. Click **"Generate Audio"**
-6. Listen or download MP3 🎧
-
----
-
-## ⚡ Notes
-
-- Audio generation is limited to **1500 characters** for speed
-- OCR is automatically triggered for scanned PDFs
-- Preprocessing improves OCR accuracy (contrast, sharpening, scaling)
-
----
-
-## 🧠 Future Improvements
-
-- 🔊 Voice selection (male/female, accents)
-- 🌍 Multi-language support
-- 📚 Full-length audiobook generation (chunked audio)
-- 🎵 Background music support
-- ☁️ Deployment (Streamlit Cloud / AWS)
+```
+Upload Document
+        │
+        ▼
+Text Extraction
+(PDF / DOCX / TXT / OCR)
+        │
+        ▼
+LLaMA 3.1 Text Rewriting
+        │
+        ▼
+Text-to-Speech (gTTS)
+        │
+        ▼
+Play & Download Audiobook
+```
 
 ---
 
-## 🤝 Contributing
+## 📸 Screenshots
 
-Feel free to fork this repo and submit pull requests!
+Add screenshots of:
+
+- Home Screen
+- Text Extraction
+- AI Rewritten Narration
+- Generated Audio Player
+
+---
+
+## 🎯 Future Enhancements
+
+- Multiple narration styles
+- Multilingual audiobook generation
+- Multiple voice options
+- Chapter-wise audiobook generation
+- User authentication
+- Cloud deployment
+- Voice cloning integration
+
+---
+
+## 👨‍💻 Author
+
+**Anish Kumar**
+
+LinkedIn: https://www.linkedin.com/in/anish-kumar-51b871336/
 
 ---
 
 ## 📄 License
 
-This project is open-source and available under the MIT License.
+This project is intended for educational and learning purposes.
